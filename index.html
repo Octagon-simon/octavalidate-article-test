@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation Library</title>
+    <!-- The validation library -->
+    <script src="./octaValidate-main/src/validate.js"></script>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        body,html{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        input{
+            all:unset;
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        label{
+            margin-bottom: 5px;
+            display: block;
+        }
+        div{
+            margin-bottom: 10px;
+        }
+        button{
+            all:unset;
+            padding: 10px;
+            background-color: #00d1b2;
+            border:1px solid;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div style="max-width: 300px;margin:auto">
+    <form id="form_register">
+        <div>
+            <label>Enter your username</label>
+            <input id="inp_uname" placeholder="Simon" octavalidate="R">
+        </div>
+        <div>
+            <label>Enter your email</label>
+            <input id="inp_email" placeholder="Simon@test.com"  octavalidate="R,EMAIL"> 
+        </div>
+        <div>
+            <label>Enter your password</label>
+            <input id="inp_pass" type="password" placeholder="*****" octavalidate="R,PASS">
+        </div>
+        <div>
+            <label>Re-enter your password</label>
+            <input id="inp_conpass" type="password" placeholder="*****" octavalidate="R" equalto="inp_pass" ov-equalto-msg="Both passwords do not match">
+        </div>
+        <button type="submit">Register</button>
+    </form>
+</div>
+<script>
+const myForm = new octaValidate('form_register');
+myForm.customRule('PASS', /12345/, 'Please enter 12345')
+
+document.querySelector('#form_register').addEventListener('submit', function(e){
+    //validate the form
+    if(myForm.validate()){
+        //submit
+        e.currentTarget.submit();
+    }else{
+        //prevent reload
+        e.preventDefault();
+    }
+})
+</script>
+</body>
+
+</html>
